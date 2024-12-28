@@ -3,17 +3,27 @@ import { Route, Router, Routes } from 'react-router-dom'
 import Login from '../components/Login'
 import App from '../App'
 import ProtectedRoute from './ProtectedRoute'
+import Dashboard from '../views/dashboard/Dashboard'
+import MainLayout from '../components/MainLayout'
+import Profile from '../views/components/Profile'
+import ManageCategories from '../views/manage/categories/ManageCategories'
+import ManageUser from '../views/manage/users/ManageUser'
+import ManageSuppliers from '../views/manage/suppliers/ManageSuppliers'
+import ManageProducts from '../views/manage/products/ManageProducts'
 
-const AppRoute = () => {
+const AppRoute = ({ title }) => {
   return (
-    <Router>
-        <Routes>
-            <Route path='/login' element={<Login />}/>
-            <Route path='/' element={<ProtectedRoute />}>
-                <Route path='/dashboard' element={<App />}/>
-            </Route>
-        </Routes>
-    </Router>
+    <Routes>
+      {/* Public Path */}
+      <Route path='/login' element={<Login />} />
+
+      <Route path='/' element={<Dashboard />}/>     
+      <Route path='/profile' element={<Profile />}/>
+      <Route path='/manage/users' element={<ManageUser />}/>
+      <Route path='/manage/categories' element={<ManageCategories />}/>
+      <Route path='/manage/suppliers' element={<ManageSuppliers />}/>
+      <Route path='/manage/products' element={<ManageProducts />}/>
+    </Routes>
   )
 }
 

@@ -9,32 +9,34 @@ const Login = () => {
   const navigate = useNavigate(); // Dùng để chuyển trang sau khi đăng nhập thành công
 
   const onFinish = async (values) => {
-    try {
-      setLoading(true);
-      // Gọi API login
-      const response = await axios.post('http://localhost:8080/api/auth/login', {
-        username: values.username,
-        password: values.password,
-      });
-      
-      // Lưu token vào localStorage hoặc state management
-      localStorage.setItem('token', response.data.token);
-      message.success('Đăng nhập thành công!');
-      
-      // Chuyển trang sau khi login
-      navigate('/dashboard'); // Điều hướng sang trang chính
-    } catch (error) {
-      message.error('Đăng nhập thất bại! Kiểm tra lại tên đăng nhập và mật khẩu.');
-    } finally {
-      setLoading(false);
-    }
-  };
+      try {
+        setLoading(true);
+        // Gọi API login
+        const response = await axios.post('http://localhost:8080/api/auth/login', {
+          email: values.username,
+          password: values.password,
+        });
+        
+        // Lưu token vào localStorage hoặc state management
+        if (response.status === 200) {
+          // localStorage.setItem('token', response.data.token);
+          localStorage.setItem('userdata', JSON.stringify(response.data));
+          message.success('Đăng nhập thành công!');
+          navigate('/');
+        } else {
+          message.error('Đăng nhập thất bại! Kiểm tra lại tên đăng nhập và mật khẩu.');
+        }
+      } catch (error) {
+        message.error('Đăng nhập thất bại! Kiểm tra lại tên đăng nhập và mật khẩu.');
+      } finally {
+        setLoading(false);
+      }
+    };
 
   return (
     <div style={styles.container}>
       <Card title="Đăng Nhập" bordered={false} style={styles.card}>
         <Form name="login_form" onFinish={onFinish}>
-          {/* Input Tài Khoản */}
           <Form.Item
             name="username"
             rules={[{ required: true, message: 'Vui lòng nhập tên đăng nhập!' }]}
@@ -44,8 +46,6 @@ const Login = () => {
               placeholder="Tên đăng nhập"
             />
           </Form.Item>
-
-          {/* Input Mật Khẩu */}
           <Form.Item
             name="password"
             rules={[{ required: true, message: 'Vui lòng nhập mật khẩu!' }]}
@@ -55,14 +55,13 @@ const Login = () => {
               placeholder="Mật khẩu"
             />
           </Form.Item>
-
-          {/* Nút Đăng Nhập */}
           <Form.Item>
             <Button type="primary" htmlType="submit" loading={loading} block>
               Đăng Nhập
             </Button>
           </Form.Item>
         </Form>
+
       </Card>
     </div>
   );
@@ -77,11 +76,14 @@ const styles = {
     justifyContent: 'center',
     alignItems: 'center',
     height: '100vh',
-    background: '#f5f5f5',
+    width: '100vw',
+    background: 'linear-gradient(to right, #D2F0F9FF, #91BCF1FF)', /* Gradient background */  
   },
   card: {
+    height: 'auto',
     width: 400,
     borderRadius: '8px',
     boxShadow: '0 4px 12px rgba(0, 0, 0, 0.1)',
   },
 };
+
