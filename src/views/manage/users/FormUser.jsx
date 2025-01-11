@@ -3,7 +3,7 @@ import axios from 'axios'
 import { Drawer, Form, Input, Row, Col, Button, Space, message, Select } from 'antd'
 
 const FormUser = ({ open, onClose, data, setData, editData }) => {
-  console.log('editData: ', editData);
+  // console.log('editData: ', editData);
   const [form] = Form.useForm();  // use to reset form
 
   useEffect(() => {

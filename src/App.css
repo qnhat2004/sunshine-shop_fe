@@ -1,13 +1,21 @@
 .ant-layout-sider-trigger {
-  background-color: #118afb !important; 
+  background-color: #218ff6 !important; 
   color: white; /* Màu chữ của nút collapse */  
+  position: fixed !important; /* Để nút collapse nằm ở trên cùng */
 }
 
 .ant-layout-sider-trigger:hover {
   background-color: #54acff !important; 
 }
 
-.responsive-table {
-  overflow-x: auto;
-  
+.ant-menu-submenu.ant-menu-submenu-inline .ant-menu-submenu.ant-menu-submenu-inline- {
+  position: fixed !important; /* Để menu nằm ở trên cùng */
 }
+
+/* App.css */
+body, html {
+  /* width: 100%; */
+  /* height: 100%; */
+  /* overflow-x: hidden; */
+}
+

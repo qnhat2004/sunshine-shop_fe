@@ -8,6 +8,7 @@ const ManageUser = () => {
   const [data, setData] = useState([]);
   const [open, setOpen] = useState(false);
   const [editData, setEditData] = useState(null);
+  const [loading, setLoading] = useState(false);
 
   const showDrawer = (record) => {
     setOpen(true);
@@ -129,23 +130,24 @@ const ManageUser = () => {
   };
 
   useEffect(() => {
+    setLoading(true);
     axios
       .get('http://localhost:8080/api/users')
       .then((response) => {
         setData(response.data);
+        setLoading(false);
       })
       .catch((error) => {
         console.error(`Error: ${error}`);
+        message.error('Failed to fetch data!');
       });
   }, [!data]);
 
   return (
-    <>
-      <Card className='w-100 bg-white overflow-auto' title='Manage Users'>
-        <Table columns={columns} dataSource={data} rowKey='id' style={{ position: 'absolute', width: '95%' }}/>
-      </Card>
+    <div className='' style={{ width: '100%', }}>
+      <Table columns={columns} dataSource={data} rowKey='id' bordered loading={loading} />
       <FormUser open={open} onClose={onClose} data={data} setData={setData} editData={editData} />
-    </>
+    </div>
   );
 };
 

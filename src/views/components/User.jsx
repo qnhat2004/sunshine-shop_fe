@@ -35,17 +35,17 @@ const User = () => {
     const menuItems = (
         <Menu>
             <Menu.Item key="1">
-                <FaUser style={{ marginRight: '5px' }}/>
+                <FaUser style={{ marginRight: '5px' }} />
                 <a href="/profile">Profile</a>
             </Menu.Item>
             <Menu.Item key="2" danger='true'>
-                <FaSignOutAlt style={{ marginRight: '5px' }}/>
+                <FaSignOutAlt style={{ marginRight: '5px' }} />
                 <a onClick={handleLogout}>Logout</a>
             </Menu.Item>
         </Menu>
     );
 
-    const parsedUserdata = JSON.parse(userdata);
+    const parsedUserdata = userdata ? JSON.parse(userdata) : null;
 
     return (
         <div>
@@ -53,8 +53,8 @@ const User = () => {
                 <Dropdown overlay={menuItems}>
                     <a onClick={(e) => e.preventDefault()}>
                         <Space>
-                            <b>{parsedUserdata.username}</b>
-                            <span style={parsedUserdata.role === 'admin' ? { color: 'green' } : { color: 'blue' }}>({JSON.parse(userdata).role.toUpperCase()})</span>
+                            <b>{parsedUserdata?.username}</b>
+                            <span style={parsedUserdata?.role === 'admin' ? { color: 'green' } : { color: 'blue' }}>({parsedUserdata.role})</span>
                         </Space>
                     </a>
                 </Dropdown>

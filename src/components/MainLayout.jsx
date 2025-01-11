@@ -58,22 +58,22 @@ const MainLayout = () => {
   }
 
   return (
-    <Layout style={{ height: '100vh', minWidth: '100vw' }}>
+    <Layout style={{ minHeight: '100vh', minWidth: '100vw',  }}>
 
       <Sider className='' style={{ background: '#fff' }} collapsible collapsed={collapsed} onCollapse={(value) => setCollapsed(value)}>
         <div className=''>
-          <Menu style={{ border: 'none' }} theme="light" className={`${collapsed ? 'resizeWidth' : ''} sider_custom`} selectedKeys={path} mode="inline" items={items} onClick={handleMenuClick} />
+          <Menu style={{  }} theme="light" className={`${collapsed ? 'resizeWidth' : ''}`} selectedKeys={path} mode="inline" items={items} onClick={handleMenuClick} />
         </div>
       </Sider>
 
-      <Layout className=''>
+      <Layout className='' style={{ height: '100%', width: '100%',  }}>
         <Header style={{ padding: '0 30px', background: '#B8DAFAFF', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
           <div style={{ marginLeft: 'auto' }} className='fw-bold fs-5'>
             <User />
           </div>
         </Header>
-        <Content style={{ margin: '15px', backgroundColor: 'white', borderRadius: 10, boxShadow: '0 0 10px rgba(0,0,0,0.1)', display: 'flex' }} >
-          <div style={{ flex: 1, display: 'flex', justifyContent: 'center', margin: '15px', position: 'relative' }}>
+        <Content style={{ margin: '16px', display: 'flex',  }} >
+          <div style={{ flex: 1, display: 'flex', justifyContent: 'center', margin: '15px' }}>
             <AppRoute/>
           </div>
         </Content>

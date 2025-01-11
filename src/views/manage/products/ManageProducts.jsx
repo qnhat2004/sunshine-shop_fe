@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { Space, Button, Table, message, Popconfirm, Card } from 'antd';
+import { Space, Button, Table, message, Popconfirm } from 'antd';
 import FormProducts from './FormProducts';
 import { PlusOutlined } from '@ant-design/icons';
 import { getProducts } from './Hooks';
@@ -11,10 +11,11 @@ const ManageProducts = () => {
     const [editData, setEditData] = useState(null);
     const [loading, setLoading] = useState(false);
 
-    const showDrawer = (record) => {
-        setOpen(true);
+    const showDrawer = (record = null) => {
         setEditData(record);
+        setOpen(true);
     };
+    
     const onClose = () => {
         setOpen(false);
         setEditData(null);
@@ -57,6 +58,7 @@ const ManageProducts = () => {
             title: 'Image',
             dataIndex: 'image',
             key: 'image',
+            render: (text) => <img src={text} alt='product' style={{ width: '200px', height: '100px' }} />,
         },
         {
             title: 'Description',
@@ -65,23 +67,13 @@ const ManageProducts = () => {
         },
         {
             title: 'Supplier',
-            dataIndex: 'supplier',
-            key: 'supplier',
+            dataIndex: ['supplier', 'name'],    // supplier.name
+            key: 'supplier.name',
         },
         {
             title: 'Category',
-            dataIndex: 'category',
-            key: 'category',
-        },
-        {
-            title: 'Created At',
-            dataIndex: 'created_at',
-            key: 'created_at',
-        },
-        {
-            title: 'Updated At',
-            dataIndex: 'updated_at',
-            key: 'updated_at',
+            dataIndex: ['category', 'name'],    // category.name
+            key: 'category.name',
         },
         {
             title: 'Action',
@@ -108,7 +100,7 @@ const ManageProducts = () => {
         const fetchData = async () => {
             try {
                 setLoading(true);
-                const products = getProducts();
+                const products = await getProducts();
                 setData(products || []);
             } catch (error) {
                 message.error('Failed to fetch data!');                
@@ -120,9 +112,9 @@ const ManageProducts = () => {
     }, []);
 
     return (
-        <div className='container overflow-auto' style={{ width: '100%', position: 'relative' }}>
-            <Button type="primary" onClick={showDrawer} style={{ marginBottom: '10px' }} icon={<PlusOutlined />}>Add Product</Button>
-            <Table columns={columns} dataSource={data} rowKey='id' style={{ position: 'absolute', width: '95%' }} />
+        <div className=''>
+            <Button type="primary" onClick={() => showDrawer(null)} style={{ marginBottom: '10px' }} icon={<PlusOutlined />}>Add Product</Button>
+            <Table columns={columns} dataSource={data} rowKey='id' bordered loading={loading}/>
             <FormProducts open={open} onClose={onClose} data={data} setData={setData} editData={editData} />
         </div>
     );

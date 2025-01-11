@@ -13,7 +13,6 @@ export const getImages = async () => {
 } 
 
 export const getProducts = async () => {
-    // Get products from server
     try {
         const response = await axios.get('http://localhost:8080/api/products');
         return response.data;
@@ -21,10 +20,4 @@ export const getProducts = async () => {
         console.error(`Error: ${error}`);
         return [];
     }
-}
-
-export const Hooks = () => {
-  return (
-    <div>Hooks</div>
-  )
 }
